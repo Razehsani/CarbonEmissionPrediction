@@ -1,27 +1,28 @@
 import matplotlib.pyplot as plt
-from sklearn.model_selection import KFold
-from sklearn.model_selection import GridSearchCV
-from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import KFold  #for example 5fold cross-validation
+from sklearn.model_selection import GridSearchCV #for knn that concurrent used for number of k in knn and generating cross-validation #improved knn
+from sklearn.neighbors import KNeighborsRegressor #cause I want to use regression in knn
 
 def train_model(X_train, y_train) -> GridSearchCV:
     
     # step-1: create a cross-validation scheme
-    folds = KFold(n_splits = 5, shuffle = True, random_state = 100)
+    folds = KFold(n_splits = 5, shuffle = True, random_state = 100) #random state is used for getting the same results after shuffle.  #randomly shuffles the data, 
 
     # step-2: specify range of hyperparameters to tune
-    hyper_params = [{'n_neighbors': list(range(1, X_train.shape[1] + 1))}]
+    hyper_params = [{'n_neighbors': list(range(1, X_train.shape[1] + 1))}] #shape[1] is the number of columns
+                                                                           # it was 200 in my early version
 
     # step-3: perform grid search
     # 3.1 specify model
-    lm = KNeighborsRegressor()
+    lm = KNeighborsRegressor() #this class imported from sklearn.neighbors library
 
     # 3.2 call GridSearchCV()
-    model_cv = GridSearchCV(estimator = lm, 
-                            param_grid = hyper_params, 
-                            scoring= 'r2',
-                            cv = folds, 
-                            verbose = 1,
-                            return_train_score=True)
+    model_cv = GridSearchCV(estimator = lm,  #model
+                            param_grid = hyper_params, #Range of k
+                            scoring= 'r2', #strategy to evaluate the performance of the cross-validation model  
+                            cv = folds, #folds is defined in step-1 #cross validation generator
+                            verbose = 1, #time to calculate
+                            return_train_score=True) #It provides additional information about how well the model is fitting the training data in each fold.  
 
     # fit the model
     model_cv.fit(X_train, y_train)
@@ -29,12 +30,11 @@ def train_model(X_train, y_train) -> GridSearchCV:
 
 
 # plotting cv results
-def create_plot(cv_results, model_name: str):
+def create_plot(cv_results)
     plt.plot(cv_results["param_n_neighbors"], cv_results["mean_test_score"], linewidth=5)
     plt.plot(cv_results["param_n_neighbors"], cv_results["mean_train_score"], linewidth=5)
     plt.xlabel('number of neighbors')
     plt.ylabel('r-squared')
     plt.title("KNN - Optimal number of neighbors")
     plt.legend(['test score', 'train score'], loc='upper left')
-    # plt.savefig(f"results/{model_name} - Optimal number of neighbors.png")
     plt.show()

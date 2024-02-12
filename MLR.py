@@ -2,10 +2,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import KFold
-from sklearn.model_selection import GridSearchCV
-from sklearn.feature_selection import RFE
-import seaborn as sns
+from sklearn.model_selection import KFold           #it is for cross-validation
+from sklearn.model_selection import GridSearchCV    #it is used for all of the 5ML model
+from sklearn.feature_selection import RFE    #using recursive feature elimination
+import seaborn as sns     
 
 
 def plot_feature_importance(importance, names, model_name: str):    
@@ -15,7 +15,7 @@ def plot_feature_importance(importance, names, model_name: str):
 
     #Create a DataFrame using a Dictionary
     data={'feature_names':feature_names,'feature_importance':feature_importance}
-    fi_df = pd.DataFrame(data)
+    fi_df = pd.DataFrame(data) #fi for feature importance
 
     #Sort the DataFrame in order decreasing feature importance
     fi_df.sort_values(by=['feature_importance'], ascending=False,inplace=True)
