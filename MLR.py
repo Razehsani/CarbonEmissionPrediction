@@ -6,7 +6,7 @@ from sklearn.model_selection import KFold           #it is for cross-validation
 from sklearn.model_selection import GridSearchCV    #it is used for all of the 5ML model
 from sklearn.feature_selection import RFE    #using recursive feature elimination
 import seaborn as sns     
-
+import constants
 
 def plot_feature_importance(importance, names, model_name: str):    
     #Create arrays from feature importance and feature names
@@ -31,24 +31,23 @@ def plot_feature_importance(importance, names, model_name: str):
 
 def train_model(X_train, y_train):
     # step-1: create a cross-validation scheme
-    folds = KFold(n_splits = 5, shuffle = True, random_state = 100)
+    folds = KFold(n_splits = 5, shuffle = True, random_state = 100) #random state is used for getting the same results after shuffle.  #randomly shuffles the data, 
 
     # step-2: specify range of hyperparameters to tune
-    hyper_params = [{'n_features_to_select': range(1, 9)}]
+    hyper_params = {'n_features_to_select': range(1, 9)}
 
     # step-3: perform grid search
     # 3.1 specify model
-    lm = LinearRegression()
-    lm = lm.fit(X_train, y_train)
-    rfe = RFE(lm)
-    rfe.fit(X_train, y_train)
+    mlrReg = LinearRegression()
+    rfe = RFE(mlrReg)
 
     # 3.2 call GridSearchCV()
     model_cv = GridSearchCV(estimator = rfe,
                             param_grid = hyper_params,
-                            scoring= 'r2', #'neg_root_mean_squared_error'
+                            scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'], #strategy to evaluate the performance of the cross-validation model  
+                            refit = 'r2',
                             cv = folds,
-                            verbose = 1,
+                            verbose = constants.print_training_logs,
                             return_train_score=True)
 
     # fit the model

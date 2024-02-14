@@ -280,17 +280,17 @@ def create_and_run_all_models(X_train: np.ndarray, y_train: np.ndarray, train_te
         lr_mlp_name, lr_mlp_model, train_test_datasets, experiment, experiment_name, optimized_lr_mlp_features)
     
     # Create plots
-    knn.create_plot(knn_cv_results, knn_name)
+    #knn.create_plot(knn_cv_results, knn_name)
     
-    lasso.create_plot(lasso_cv_results, lasso_name)
+    #lasso.create_plot(lasso_cv_results, lasso_name)
     lasso.plot_feature_importance(lasso_model.best_estimator_.coef_,
                                   all_independent_feature_names, lasso_name)
     
-    mlr.create_plot(mlr_cv_results, mlr_name)
+    #mlr.create_plot(mlr_cv_results, mlr_name)
     mlr.plot_feature_importance(mlr_model.best_estimator_.estimator_.coef_[
                                 0], all_independent_feature_names[mlr_model.best_estimator_.support_], mlr_name)
     
-    rf.create_plot(rf_cv_results, rf_name)
+    #rf.create_plot(rf_cv_results, rf_name)
     rf.plot_feature_importance(rf_model.best_estimator_.feature_importances_, all_independent_feature_names,
                                rf_name)
 
