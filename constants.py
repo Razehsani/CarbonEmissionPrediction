@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 
+print_training_logs = 1
+
 independant_variables_other_crops = range(1, 22)
 dependant_variable_other_crops = 22
 cft_dependant_variable_other_crops = 23

@@ -3,13 +3,14 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.neural_network import MLPRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.feature_selection import RFE
+import constants
 
 def train_model(X_train, y_train, feature_names):
     
     optimized_train_set, optimized_indices = use_optimized_features(X_train, y_train, feature_names);
     
     # step-1: create a cross-validation scheme
-    folds = KFold(n_splits = 5, shuffle = True, random_state = 100)
+    folds = KFold(n_splits = 5, shuffle = True, random_state = 100) #random state is used for getting the same results after shuffle.  #randomly shuffles the data, 
 
     # step-2: specify range of hyperparameters to tune
     hyper_params = [{"hidden_layer_sizes": [(8,),(8,),(8,)],
@@ -24,9 +25,10 @@ def train_model(X_train, y_train, feature_names):
     # 3.2 call GridSearchCV()
     model_cv = GridSearchCV(estimator = lm, 
                             param_grid = hyper_params, 
-                            scoring= 'r2', #'neg_root_mean_squared_error'
-                            cv = folds, 
-                            verbose = 1,
+                            scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'], #strategy to evaluate the performance of the cross-validation model  
+                            refit = 'r2',
+                            cv=folds,
+                            verbose = constants.print_training_logs,
                             return_train_score=True)      
 
     # fit the model
