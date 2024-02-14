@@ -20,10 +20,10 @@ def train_model(X_train, y_train, feature_names):
 
     # step-3: perform grid search
     # 3.1 specify model
-    lm = MLPRegressor()
+    mlrmlpReg = MLPRegressor()
 
     # 3.2 call GridSearchCV()
-    model_cv = GridSearchCV(estimator = lm, 
+    model_cv = GridSearchCV(estimator = mlrmlpReg, 
                             param_grid = hyper_params, 
                             scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'], #strategy to evaluate the performance of the cross-validation model  
                             refit = 'r2',

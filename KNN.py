@@ -18,10 +18,10 @@ def train_model(X_train, y_train) -> GridSearchCV:
 
     # step-3: perform grid search
     # 3.1 specify model
-    lm = KNeighborsRegressor() #this class imported from sklearn.neighbors library
+    knnReg = KNeighborsRegressor() #this class imported from sklearn.neighbors library
 
     # 3.2 call GridSearchCV()
-    model_cv = GridSearchCV(estimator = lm,  #model
+    model_cv = GridSearchCV(estimator = knnReg,  #model
                             param_grid = hyper_params, #Range of k
                             scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'], #strategy to evaluate the performance of the cross-validation model  
                             refit = 'r2',

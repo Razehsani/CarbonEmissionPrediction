@@ -38,10 +38,8 @@ def train_model(X_train, y_train):
 
     # step-3: perform grid search
     # 3.1 specify model
-    lm = LinearRegression()
-    lm = lm.fit(X_train, y_train)
-    rfe = RFE(lm)
-    rfe.fit(X_train, y_train)
+    mlrReg = LinearRegression()
+    rfe = RFE(mlrReg)
 
     # 3.2 call GridSearchCV()
     model_cv = GridSearchCV(estimator = rfe,
