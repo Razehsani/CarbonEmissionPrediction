@@ -34,7 +34,7 @@ def train_model(X_train, y_train):
     folds = KFold(n_splits = 5, shuffle = True, random_state = 100) #random state is used for getting the same results after shuffle.  #randomly shuffles the data, 
 
     # step-2: specify range of hyperparameters to tune
-    hyper_params = [{'n_features_to_select': range(1, 9)}]
+    hyper_params = {'n_features_to_select': range(1, 9)}
 
     # step-3: perform grid search
     # 3.1 specify model
