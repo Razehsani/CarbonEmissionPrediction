@@ -165,7 +165,10 @@ def create_test_results(model_name: str, model_cv: GridSearchCV, train_test_data
 
         if (len(experiment["datasets"]) > 1):
             details = []
-            y_pred_total = model_cv.best_estimator_.predict(X_test_total)
+            if(len(optimized_features) > 0):
+                y_pred_total = model_cv.best_estimator_.predict(X_test_total[:, optimized_features])
+            else:
+                y_pred_total = model_cv.best_estimator_.predict(X_test_total)
             
             r2Score_total = r2_score(y_test_total, y_pred_total)
             rmse_total = np.sqrt(np.abs(mean_squared_error(y_test_total, y_pred_total)))
