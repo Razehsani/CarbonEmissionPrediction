@@ -84,6 +84,7 @@ def read_datasets_and_prepare_model(file_name, datasets_dic, experiment_name, cf
                     y_train = np.concatenate(
                         (y_train, train_test_datasets[index][4].values))
 
+        y_train = np.ravel(y_train)
         return (train_test_datasets, X_train, y_train)
 
     for index in range(len(datasets_dic)):
@@ -104,6 +105,7 @@ def read_datasets_and_prepare_model(file_name, datasets_dic, experiment_name, cf
                 y_train = np.concatenate((y_train, y_train_crop.values))
 
     pickle.dump(train_test_datasets, open(f"all results/{experiment_name}/pickles/{file_name}", 'wb'))
+    y_train = np.ravel(y_train)
     return (train_test_datasets, X_train, y_train)  #if we had pickles before, we do not need to load dataset and ztrain again
 
 
@@ -326,7 +328,7 @@ def run_experiments():
             X_train = np.concatenate((X_train, X_train_aug))
             y_train = np.concatenate((y_train, y_train_aug))
 
-            create_and_run_all_models(X_train, y_train, train_test_datasets_aug, True, experiment, experiment_name)
+            create_and_run_all_models(X_train, y_train, train_test_datasets, True, experiment, experiment_name)
 
         if(experiment["generate_cft_result"] == True):
             experiment_name = experiment["title"] + " - cool farm tool"
@@ -345,7 +347,7 @@ def run_experiments():
                 X_train = np.concatenate((X_train, X_train_aug))
                 y_train = np.concatenate((y_train, y_train_aug))
 
-                create_and_run_all_models(X_train, y_train, train_test_datasets_aug, True, experiment, experiment_name)
+                create_and_run_all_models(X_train, y_train, train_test_datasets, True, experiment, experiment_name)
 
 
 initialize() #this function is for setting the parameters, creating the required folders. #in the flow of the code initialize()
