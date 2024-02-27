@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-print_training_logs = 1
+print_training_logs = 0
 
 independant_variables_other_crops = range(1, 22)
 dependant_variable_other_crops = 22

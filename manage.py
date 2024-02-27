@@ -7,7 +7,7 @@ from sklearn.model_selection import GridSearchCV
 import pickle
 from pathlib import Path
 
-import constants
+import constants           #I imported all of our required modules
 import KNN as knn
 import Lasso as lasso
 import MLR as mlr
@@ -17,7 +17,10 @@ import MLRMLPRegressor as mlrmlp
 import utils
 import csv
 
-final_results = []
+# we have some functions here. every of these functions do special things,after definition of functions 2functions will
+# be called,initialize() and run_experiment().
+
+final_results = []  #this is a parameter for 
 
 def write_results_to_csv(experiment_name):
     file_path = f"all results/{experiment_name}/results/{constants.scores_output_csv_file}"
@@ -29,25 +32,27 @@ def write_results_to_csv(experiment_name):
 
 
 def initialize():
-    plt.figure(figsize=(16, 6))
-    if (not (Path.exists(Path("all results")))):
-        Path.mkdir(Path("all results"), exist_ok=True)
+    plt.figure(figsize=(16, 6))     #dimention of printed diagrams(by experience I came to this result this is a good size)
+    if (not (Path.exists(Path("all results")))): #if this folder won't exist, go and create it.
+        Path.mkdir(Path("all results"), exist_ok=True) #mkdir for make directory #exist_ok, to not getting error if we had folder
 
-    for experiment in constants.experiments:
+    for experiment in constants.experiments:   #for every experiment we defined in constants.py we get the title of experiment.
+                                                
         experiment_name = experiment["title"]
-        create_output_directories(experiment_name)
+        create_output_directories(experiment_name) #create output folders # we have results folder and pickles folder in all results
+    
         
-        if(experiment["generate_cft_result"] == True):
+        if(experiment["generate_cft_result"] == True):  #for every experiment, it asks we want the results of cool farm tool or not?
             experiment_name = experiment["title"] + " - cool farm tool"
             create_output_directories(experiment_name)
         
 
-def create_output_directories(experiment_name: str):
-    if (not (Path.exists(Path(f"all results/{experiment_name}")))):
-        Path.mkdir(Path(f"all results/{experiment_name}"), exist_ok=True)
+def create_output_directories(experiment_name: str):     # example.all results-->Iranian potato only-->pickles & results
+    if (not (Path.exists(Path(f"all results/{experiment_name}")))): #this function will bulid these folders 
+        Path.mkdir(Path(f"all results/{experiment_name}"), exist_ok=True) #  will build (results.txt) and (scores.csv)
             
     if (not (Path.exists(Path(f"all results/{experiment_name}/results")))):
-        Path.mkdir(Path(f"all results/{experiment_name}/results"), exist_ok=True)
+        Path.mkdir(Path(f"all results/{experiment_name}/results"), exist_ok=True) 
         
     if (not (Path.exists(Path(f"all results/{experiment_name}/pickles")))):
         Path.mkdir(Path(f"all results/{experiment_name}/pickles"), exist_ok=True)
@@ -60,11 +65,11 @@ def create_output_directories(experiment_name: str):
 
 
 def read_datasets_and_prepare_model(file_name, datasets_dic, experiment_name, cft_evaluate, experiment_type):
-    train_test_datasets = []
+    train_test_datasets = []  
     X_train = np.empty([1, 1])
     y_train = np.empty([1, 1])
 
-    if (Path.exists(Path(f"all results/{experiment_name}/pickles/{file_name}"))):
+    if (Path.exists(Path(f"all results/{experiment_name}/pickles/{file_name}"))):  #if already loaded or not
         train_test_datasets = pickle.load(
             open(f"all results/{experiment_name}/pickles/{file_name}", 'rb'))
 
@@ -82,10 +87,10 @@ def read_datasets_and_prepare_model(file_name, datasets_dic, experiment_name, cf
         return (train_test_datasets, X_train, y_train)
 
     for index in range(len(datasets_dic)):
-        trainCropDataset, X_train_crop, y_train_crop = utils.load_dataset(
-            datasets_dic[index]["train_file_path"], cft_evaluate, experiment_type)
+        trainCropDataset, X_train_crop, y_train_crop = utils.load_dataset(                       
+            datasets_dic[index]["train_file_path"], cft_evaluate, experiment_type)      #call utils for train dataset
         testCropDataset, X_test_crop, y_test_crop = utils.load_dataset(
-            datasets_dic[index]["test_file_path"], cft_evaluate, experiment_type)
+            datasets_dic[index]["test_file_path"], cft_evaluate, experiment_type)       # call utils for test dataset
 
         train_test_datasets.append(
             [trainCropDataset, testCropDataset, X_train_crop, X_test_crop, y_train_crop, y_test_crop])
@@ -99,7 +104,7 @@ def read_datasets_and_prepare_model(file_name, datasets_dic, experiment_name, cf
                 y_train = np.concatenate((y_train, y_train_crop.values))
 
     pickle.dump(train_test_datasets, open(f"all results/{experiment_name}/pickles/{file_name}", 'wb'))
-    return (train_test_datasets, X_train, y_train)
+    return (train_test_datasets, X_train, y_train)  #if we had pickles before, we do not need to load dataset and ztrain again
 
 
 def create_test_results(model_name: str, model_cv: GridSearchCV, train_test_datasets: list, experiment: dict, experiment_name: str, optimized_features: list = []):
@@ -300,14 +305,17 @@ def create_and_run_all_models(X_train: np.ndarray, y_train: np.ndarray, train_te
     write_results_to_csv(experiment_name)
 
 
-def run_experiments():
-    for experiment in constants.experiments:
-        experiment_name = experiment["title"]
-        print(f"\n\n\nRun model for experiment {experiment_name}")
+def run_experiments(): 
+    for experiment in constants.experiments: # this specific function is said; for every experiment in constants.py run some models
+        experiment_name = experiment["title"] #first grab title
+        print(f"\n\n\nRun model for experiment {experiment_name}") #run models
+        #experiment type: potato or other we have four state: manual_normal , manual_aug, cft_normal, cft_aug
         
+        #this function gives us 3output(train_test_datasets, X_train, y_train) #read_datasets_and_prepare_model will be called
         train_test_datasets, X_train, y_train = read_datasets_and_prepare_model(
             constants.train_test_datasets_file_name, experiment["datasets"], experiment_name, False, experiment["experiment_type"])
-
+        
+        #input parameters are dataset file_name,,datasets,experiment_name,experiment_type(from constants file)
         create_and_run_all_models(X_train, y_train, train_test_datasets, False, experiment, experiment_name)
 
         if (len(experiment["aug_datasets"]) > 0):
@@ -318,7 +326,7 @@ def run_experiments():
             X_train = np.concatenate((X_train, X_train_aug))
             y_train = np.concatenate((y_train, y_train_aug))
 
-            create_and_run_all_models(X_train, y_train, train_test_datasets, True, experiment, experiment_name)
+            create_and_run_all_models(X_train, y_train, train_test_datasets_aug, True, experiment, experiment_name)
 
         if(experiment["generate_cft_result"] == True):
             experiment_name = experiment["title"] + " - cool farm tool"
@@ -337,8 +345,10 @@ def run_experiments():
                 X_train = np.concatenate((X_train, X_train_aug))
                 y_train = np.concatenate((y_train, y_train_aug))
 
-                create_and_run_all_models(X_train, y_train, train_test_datasets, True, experiment, experiment_name)
+                create_and_run_all_models(X_train, y_train, train_test_datasets_aug, True, experiment, experiment_name)
 
 
-initialize()
-run_experiments()
+initialize() #this function is for setting the parameters, creating the required folders. #in the flow of the code initialize()
+             #will be called first, and initialize will call create_output_directory,
+
+run_experiments(); #for every experiment that defined in the constants.py do some work,
