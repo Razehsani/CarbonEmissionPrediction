@@ -43,7 +43,7 @@ def train_model(X_train, y_train):
     # 3.2 call GridSearchCV()
     model_cv = GridSearchCV(estimator = lassoReg, 
                             param_grid = hyper_params, 
-                            scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'], #strategy to evaluate the performance of the cross-validation model  
+                            scoring = constants.scoring,
                             refit = 'r2',
                             cv = folds,
                             verbose = constants.print_training_logs,
@@ -53,11 +53,10 @@ def train_model(X_train, y_train):
     model_cv.fit(X_train, y_train)
     return model_cv
 
-def create_plot(cv_results, model_name: str):
-    # plotting cv results
-
-    plt.plot(cv_results["param_alpha"], cv_results["mean_test_score"], linewidth=5)
-    plt.plot(cv_results["param_alpha"], cv_results["mean_train_score"], linewidth=5)
+def create_plot(cv_results, model_cv, model_name: str):
+    # plotting cv results    
+    plt.plot(cv_results["param_alpha"], cv_results["mean_test_r2"], linewidth=2)
+    plt.plot(cv_results["param_alpha"], cv_results["mean_train_r2"], linewidth=2)
     plt.xlabel('alpha')
     plt.ylabel('r-squared')
     plt.title("Lasso - Optimal alpha")

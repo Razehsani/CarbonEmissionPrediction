@@ -4,6 +4,7 @@ from sklearn.model_selection import GridSearchCV #for knn that concurrent used f
 from sklearn.neighbors import KNeighborsRegressor #cause I want to use regression in knn
 import numpy as np
 import constants
+import pandas as pd
 
 def train_model(X_train, y_train) -> GridSearchCV:
     
@@ -23,7 +24,7 @@ def train_model(X_train, y_train) -> GridSearchCV:
     # 3.2 call GridSearchCV()
     model_cv = GridSearchCV(estimator = knnReg,  #model
                             param_grid = hyper_params, #Range of k
-                            scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'], #strategy to evaluate the performance of the cross-validation model  
+                            scoring = constants.scoring,
                             refit = 'r2',
                             cv = folds, #folds is defined in step-1 #cross validation generator
                             verbose = constants.print_training_logs, # print logs while working
@@ -34,9 +35,14 @@ def train_model(X_train, y_train) -> GridSearchCV:
     return model_cv
 
 # plotting cv results
-def create_plot(cv_results, model_name:str):
-    plt.plot(cv_results["param_n_neighbors"], cv_results["mean_test_score"], linewidth=5)
-    plt.plot(cv_results["param_n_neighbors"], cv_results["mean_train_score"], linewidth=5)
+def create_plot(cv_results, model_cv, model_name:str):
+    df = pd.DataFrame(cv_results)
+    df = df[df['param_algorithm'] == model_cv.best_params_['algorithm']]
+    df = df[df['param_p'] == model_cv.best_params_['p']]
+    df = df[df['param_weights'] == model_cv.best_params_['weights']]
+    
+    plt.plot(df["param_n_neighbors"], df["mean_test_r2"], linewidth=2)
+    plt.plot(df["param_n_neighbors"], df["mean_train_r2"], linewidth=2)
     plt.xlabel('number of neighbors')
     plt.ylabel('r-squared')
     plt.title("KNN - Optimal number of neighbors")

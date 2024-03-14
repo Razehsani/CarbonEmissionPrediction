@@ -14,6 +14,7 @@ train_test_datasets_file_name = "train_test_datasets.sav"
 train_test_datasets_aug_file_name = "train_test_datasets_aug.sav"
 scores_output_file_name = "scores.txt"
 scores_output_csv_file = "result.csv"
+scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'] #strategy to evaluate the performance of the cross-validation model
 
 excluded_normalization_columns = [
     "Mixed tillage (Frequency)",
@@ -34,7 +35,7 @@ experiments = [
     {
         "title": "1. Iranian potato only",
         "experiment_type": "potato",
-        "generate_cft_result": True,
+        "generate_cft_result": False,
         "datasets": [ 
             {
                 "train_file_path": 'data/October datasets/Iran-potato - Train.xlsx',
@@ -62,7 +63,7 @@ experiments = [
     {
         "title": "5. Morocco potato only",
         "experiment_type": "potato",
-        "generate_cft_result": True,
+        "generate_cft_result": False,
         "datasets": [ 
             {
                 "train_file_path": 'data/October datasets/Morocco-potato - Train.xlsx',
@@ -90,7 +91,7 @@ experiments = [
     {
         "title": "9. Iranian Train set only(0.8) + Iran(0.2) & Mor test set(0.5) & Peru data(1)",
         "experiment_type": "potato",
-        "generate_cft_result": True,
+        "generate_cft_result": False,
         "datasets": [
             {
                 "train_file_path": 'data/October datasets/Iran-potato - Train.xlsx',
@@ -139,7 +140,7 @@ experiments = [
     {
         "title": "13. Iranian Train set (0.8) & Mor Train set (0.5) + Iran(0.2) & Mor test set(0.5) & Peru data(1)",
         "experiment_type": "potato",
-        "generate_cft_result": True,
+        "generate_cft_result": False,
         "datasets": [
             {
                 "train_file_path": 'data/October datasets/Iran-potato - Train.xlsx',
@@ -402,107 +403,6 @@ experiments = [
         "aug_datasets": []
     },
     
-    # 30. All 13 crops of Iran together
-    {
-        "title": "30. All 13 crops of Iran together",
-        "experiment_type": "other",
-        "generate_cft_result": False,
-        "datasets": [ 
-            {
-                "train_file_path": 'data/Vegetables/Cabbage_aug - Final - Train.csv',
-                "test_file_path": 'data/Vegetables/Cabbage_aug - Final - Test.csv',
-                "dataset_displayname": 'Cabbage',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Vegetables/Carrot_aug - Final - Train.csv',
-                "test_file_path": 'data/Vegetables/Carrot_aug - Final - Test.csv',
-                "dataset_displayname": 'Carrot',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Vegetables/Cucumber_aug - Final - Train.csv',
-                "test_file_path": 'data/Vegetables/Cucumber_aug - Final - Test.csv',
-                "dataset_displayname": 'Cucumber',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Vegetables/Onion_aug - Final - Train.csv',
-                "test_file_path": 'data/Vegetables/Onion_aug - Final - Test.csv',
-                "dataset_displayname": 'Onion',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Vegetables/Sugar beet_aug - Final - Train.csv',
-                "test_file_path": 'data/Vegetables/Sugar beet_aug - Final - Test.csv',
-                "dataset_displayname": 'Sugar beet',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Vegetables/Tomato_aug - Final - Train.csv',
-                "test_file_path": 'data/Vegetables/Tomato_aug - Final  - Test.csv',
-                "dataset_displayname": 'Tomato',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Vegetables/Watermelon_aug - Final - Train.csv',
-                "test_file_path": 'data/Vegetables/Watermelon_aug - Final - Test.csv',
-                "dataset_displayname": 'Watermelon',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Lentils/Alfalfa_aug - Final - Train.csv',
-                "test_file_path": 'data/Lentils/Alfalfa_aug - Final - Test.csv',
-                "dataset_displayname": 'Alfalfa',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Lentils/Beans_aug - Final - Train.csv',
-                "test_file_path": 'data/Lentils/Beans_aug - Final - Test.csv',
-                "dataset_displayname": 'Beans',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Lentils/lentils2_aug - Final - Train.csv',
-                "test_file_path": 'data/Lentils/lentils2_aug - Final - Test.csv',
-                "dataset_displayname": 'Lentils',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Cereals/Irrigated wheat_aug - Final - Train.csv',
-                "test_file_path": 'data/Cereals/Irrigated wheat_aug - Final - Test.csv',
-                "dataset_displayname": 'Irrigated wheat',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Cereals/Corn_aug - Final - Train.csv',
-                "test_file_path": 'data/Cereals/Corn_aug - Final - Test.csv',
-                "dataset_displayname": 'Corn',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-            {
-                "train_file_path": 'data/Cereals/Irrigated barley_aug - Final - Train.csv',
-                "test_file_path": 'data/Cereals/Irrigated barley_aug - Final - Test.csv',
-                "dataset_displayname": 'Irrigated barley',
-                "use_in_train": True,
-                "use_in_test": True
-            },
-        ],
-        "aug_datasets": []
-    },
-    
     # 31. Cereals together
     {
         "title": "31. Cereals together",
@@ -623,6 +523,105 @@ experiments = [
         ],
         "aug_datasets": []
     },
-]
 
-plt.rcParams.update({'font.size': 16})
+    # 30. All 13 crops of Iran together
+    {
+        "title": "30. All 13 crops of Iran together",
+        "experiment_type": "other",
+        "generate_cft_result": False,
+        "datasets": [ 
+            {
+                "train_file_path": 'data/Vegetables/Cabbage_aug - Final - Train.csv',
+                "test_file_path": 'data/Vegetables/Cabbage_aug - Final - Test.csv',
+                "dataset_displayname": 'Cabbage',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Vegetables/Carrot_aug - Final - Train.csv',
+                "test_file_path": 'data/Vegetables/Carrot_aug - Final - Test.csv',
+                "dataset_displayname": 'Carrot',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Vegetables/Cucumber_aug - Final - Train.csv',
+                "test_file_path": 'data/Vegetables/Cucumber_aug - Final - Test.csv',
+                "dataset_displayname": 'Cucumber',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Vegetables/Onion_aug - Final - Train.csv',
+                "test_file_path": 'data/Vegetables/Onion_aug - Final - Test.csv',
+                "dataset_displayname": 'Onion',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Vegetables/Sugar beet_aug - Final - Train.csv',
+                "test_file_path": 'data/Vegetables/Sugar beet_aug - Final - Test.csv',
+                "dataset_displayname": 'Sugar beet',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Vegetables/Tomato_aug - Final - Train.csv',
+                "test_file_path": 'data/Vegetables/Tomato_aug - Final  - Test.csv',
+                "dataset_displayname": 'Tomato',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Vegetables/Watermelon_aug - Final - Train.csv',
+                "test_file_path": 'data/Vegetables/Watermelon_aug - Final - Test.csv',
+                "dataset_displayname": 'Watermelon',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Lentils/Alfalfa_aug - Final - Train.csv',
+                "test_file_path": 'data/Lentils/Alfalfa_aug - Final - Test.csv',
+                "dataset_displayname": 'Alfalfa',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Lentils/Beans_aug - Final - Train.csv',
+                "test_file_path": 'data/Lentils/Beans_aug - Final - Test.csv',
+                "dataset_displayname": 'Beans',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Lentils/lentils2_aug - Final - Train.csv',
+                "test_file_path": 'data/Lentils/lentils2_aug - Final - Test.csv',
+                "dataset_displayname": 'Lentils',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Cereals/Irrigated wheat_aug - Final - Train.csv',
+                "test_file_path": 'data/Cereals/Irrigated wheat_aug - Final - Test.csv',
+                "dataset_displayname": 'Irrigated wheat',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Cereals/Corn_aug - Final - Train.csv',
+                "test_file_path": 'data/Cereals/Corn_aug - Final - Test.csv',
+                "dataset_displayname": 'Corn',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+            {
+                "train_file_path": 'data/Cereals/Irrigated barley_aug - Final - Train.csv',
+                "test_file_path": 'data/Cereals/Irrigated barley_aug - Final - Test.csv',
+                "dataset_displayname": 'Irrigated barley',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+        ],
+        "aug_datasets": []
+    },
+]
