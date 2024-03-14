@@ -44,7 +44,7 @@ def train_model(X_train, y_train):
     # 3.2 call GridSearchCV()
     model_cv = GridSearchCV(estimator = rfe,
                             param_grid = hyper_params,
-                            scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'], #strategy to evaluate the performance of the cross-validation model  
+                            scoring = constants.scoring,
                             refit = 'r2',
                             cv = folds,
                             verbose = constants.print_training_logs,
@@ -55,10 +55,10 @@ def train_model(X_train, y_train):
     return model_cv
 
 # plotting cv results
-def create_plot(cv_results, model_name: str):
+def create_plot(cv_results, model_cv, model_name: str):
     
-    plt.plot(cv_results["param_n_features_to_select"], cv_results["mean_test_score"], linewidth=5)
-    plt.plot(cv_results["param_n_features_to_select"], cv_results["mean_train_score"], linewidth=5)
+    plt.plot(cv_results["param_n_features_to_select"], cv_results["mean_test_r2"], linewidth=2)
+    plt.plot(cv_results["param_n_features_to_select"], cv_results["mean_train_r2"], linewidth=2)
     plt.xlabel('number of features')
     plt.ylabel('r-squared')
     plt.title("MLR - Optimal number of features")

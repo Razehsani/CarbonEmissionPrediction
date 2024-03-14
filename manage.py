@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, mean_squared_log_error
@@ -33,6 +34,9 @@ def write_results_to_csv(experiment_name):
 
 def initialize():
     plt.figure(figsize=(16, 6))     #dimention of printed diagrams(by experience I came to this result this is a good size)
+    font = {'family' : 'Times new roman',
+            'size'   : 12}
+    mpl.rc('font', **font)
     if (not (Path.exists(Path("all results")))): #if this folder won't exist, go and create it.
         Path.mkdir(Path("all results"), exist_ok=True) #mkdir for make directory #exist_ok, to not getting error if we had folder
 
@@ -290,17 +294,17 @@ def create_and_run_all_models(X_train: np.ndarray, y_train: np.ndarray, train_te
         lr_mlp_name, lr_mlp_model, train_test_datasets, experiment, experiment_name, optimized_lr_mlp_features)
     
     # Create plots
-    #knn.create_plot(knn_cv_results, knn_name)
+    knn.create_plot(knn_cv_results, knn_model, knn_name)
     
-    #lasso.create_plot(lasso_cv_results, lasso_name)
+    lasso.create_plot(lasso_cv_results, lasso_model, lasso_name)
     lasso.plot_feature_importance(lasso_model.best_estimator_.coef_,
                                   all_independent_feature_names, lasso_name)
     
-    #mlr.create_plot(mlr_cv_results, mlr_name)
+    mlr.create_plot(mlr_cv_results, mlr_model, mlr_name)
     mlr.plot_feature_importance(mlr_model.best_estimator_.estimator_.coef_[
                                 0], all_independent_feature_names[mlr_model.best_estimator_.support_], mlr_name)
     
-    #rf.create_plot(rf_cv_results, rf_name)
+    rf.create_plot(rf_cv_results, rf_model, rf_name)
     rf.plot_feature_importance(rf_model.best_estimator_.feature_importances_, all_independent_feature_names,
                                rf_name)
 

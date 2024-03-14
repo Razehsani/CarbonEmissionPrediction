@@ -46,7 +46,7 @@ def train_model(X_train, y_train):
     # 3.2 call GridSearchCV()
     model_cv = GridSearchCV(estimator = rfReg, 
                             param_grid = hyper_params, 
-                            scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'], #strategy to evaluate the performance of the cross-validation model  
+                            scoring = constants.scoring,
                             refit = 'r2',
                             cv=folds,
                             verbose = constants.print_training_logs,
@@ -58,9 +58,14 @@ def train_model(X_train, y_train):
 
 
 # plotting cv results
-def create_plot(cv_results, model_name: str):
-    plt.plot(cv_results["param_max_depth"], cv_results["mean_test_score"], linewidth=5)
-    plt.plot(cv_results["param_max_depth"], cv_results["mean_train_score"], linewidth=5)
+def create_plot(cv_results, model_cv, model_name: str):
+    df = pd.DataFrame(cv_results)
+    df = df[df['param_n_estimators'] == model_cv.best_params_['n_estimators']]
+    df = df[df['param_max_features'] == model_cv.best_params_['max_features']]
+    df = df[df['param_random_state'] == model_cv.best_params_['random_state']]
+    
+    plt.plot(df["param_max_depth"], df["mean_test_r2"], linewidth=2)
+    plt.plot(df["param_max_depth"], df["mean_train_r2"], linewidth=2)
     plt.xlabel('max-depth')
     plt.ylabel('r-squared')
     plt.title("RF - Optimal max-depth")
