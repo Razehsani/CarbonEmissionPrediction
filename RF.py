@@ -69,6 +69,6 @@ def create_plot(cv_results, model_cv, model_name: str):
     plt.xlabel('max-depth')
     plt.ylabel('r-squared')
     plt.title("RF - Optimal max-depth")
-    plt.legend(['test score', 'train score'], loc='upper left')
+    plt.legend(['validation score', 'train score'], loc='upper left')
     # plt.savefig(f"results/{model_name} - Optimal max-depth.png")
     plt.show()

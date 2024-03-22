@@ -33,7 +33,6 @@ def write_results_to_csv(experiment_name):
 
 
 def initialize():
-    plt.figure(figsize=(16, 6))     #dimention of printed diagrams(by experience I came to this result this is a good size)
     font = {'family' : 'Times new roman',
             'size'   : 12}
     mpl.rc('font', **font)
@@ -301,8 +300,7 @@ def create_and_run_all_models(X_train: np.ndarray, y_train: np.ndarray, train_te
                                   all_independent_feature_names, lasso_name)
     
     mlr.create_plot(mlr_cv_results, mlr_model, mlr_name)
-    mlr.plot_feature_importance(mlr_model.best_estimator_.estimator_.coef_[
-                                0], all_independent_feature_names[mlr_model.best_estimator_.support_], mlr_name)
+    mlr.plot_feature_importance(mlr_model.best_estimator_.estimator_.coef_, all_independent_feature_names[mlr_model.best_estimator_.support_], mlr_name)
     
     rf.create_plot(rf_cv_results, rf_model, rf_name)
     rf.plot_feature_importance(rf_model.best_estimator_.feature_importances_, all_independent_feature_names,

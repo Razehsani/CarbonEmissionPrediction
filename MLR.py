@@ -62,6 +62,6 @@ def create_plot(cv_results, model_cv, model_name: str):
     plt.xlabel('number of features')
     plt.ylabel('r-squared')
     plt.title("MLR - Optimal number of features")
-    plt.legend(['test score', 'train score'], loc='upper left')
+    plt.legend(['validation score', 'train score'], loc='upper left')
     #plt.savefig(f"results/{model_name} - Optimal number of features.png")
     plt.show()
