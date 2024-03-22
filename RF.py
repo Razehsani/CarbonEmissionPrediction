@@ -22,9 +22,9 @@ def plot_feature_importance(importance, names, model_name: str):
     #Plot Searborn bar chart
     sns.barplot(x=fi_df['feature_importance'], y=fi_df['feature_names'])
     #Add chart labels
-    plt.title('RANDOM FOREST FEATURE IMPORTANCE')
-    plt.xlabel('FEATURE IMPORTANCE')
-    plt.ylabel('FEATURE NAMES')
+    plt.title('RF feature importance')
+    plt.xlabel('Feature importance')
+    plt.ylabel('Feature names')
     # plt.savefig(f"results/{model_name} FEATURE IMPORTANCE.png")
     plt.show()
     
@@ -66,9 +66,9 @@ def create_plot(cv_results, model_cv, model_name: str):
     
     plt.plot(df["param_max_depth"], df["mean_test_r2"], linewidth=2)
     plt.plot(df["param_max_depth"], df["mean_train_r2"], linewidth=2)
-    plt.xlabel('max-depth')
-    plt.ylabel('r-squared')
-    plt.title("RF - Optimal max-depth")
+    plt.xlabel('Max depth')
+    plt.ylabel('R-squared')
+    plt.title("RF optimal max depth")
     plt.legend(['test score', 'train score'], loc='upper left')
     # plt.savefig(f"results/{model_name} - Optimal max-depth.png")
     plt.show()

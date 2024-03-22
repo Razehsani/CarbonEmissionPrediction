@@ -23,9 +23,9 @@ def plot_feature_importance(importance, names, model_name: str):
     #Plot Searborn bar chart
     sns.barplot(x=fi_df['feature_importance'], y=fi_df['feature_names'])
     #Add chart labels
-    plt.title('MLR FEATURE COEFFICIENTS')
-    plt.xlabel('FEATURE COEFFICIENTS')
-    plt.ylabel('FEATURE NAMES')
+    plt.title('MLR feature coefficients')
+    plt.xlabel('Feature coefficients')
+    plt.ylabel('Feature names')
     # plt.savefig(f"results/{model_name} FEATURE COEFFICIENTS.png")
     plt.show()
 
@@ -59,9 +59,9 @@ def create_plot(cv_results, model_cv, model_name: str):
     
     plt.plot(cv_results["param_n_features_to_select"], cv_results["mean_test_r2"], linewidth=2)
     plt.plot(cv_results["param_n_features_to_select"], cv_results["mean_train_r2"], linewidth=2)
-    plt.xlabel('number of features')
-    plt.ylabel('r-squared')
-    plt.title("MLR - Optimal number of features")
+    plt.xlabel('Number of features')
+    plt.ylabel('R-squared')
+    plt.title("MLR optimal number of features")
     plt.legend(['test score', 'train score'], loc='upper left')
     #plt.savefig(f"results/{model_name} - Optimal number of features.png")
     plt.show()

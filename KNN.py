@@ -43,8 +43,8 @@ def create_plot(cv_results, model_cv, model_name:str):
     
     plt.plot(df["param_n_neighbors"], df["mean_test_r2"], linewidth=2)
     plt.plot(df["param_n_neighbors"], df["mean_train_r2"], linewidth=2)
-    plt.xlabel('number of neighbors')
-    plt.ylabel('r-squared')
-    plt.title("KNN - Optimal number of neighbors")
+    plt.xlabel('Number of neighbors')
+    plt.ylabel('R-squared')
+    plt.title("KNN optimal number of neighbors")
     plt.legend(['test score', 'train score'], loc='upper left')
     plt.show()
