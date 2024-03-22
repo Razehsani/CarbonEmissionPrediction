@@ -60,6 +60,6 @@ def create_plot(cv_results, model_cv, model_name: str):
     plt.xlabel('Alpha')
     plt.ylabel('R-squared')
     plt.title("Lasso optimal alpha")
-    plt.legend(['test score', 'train score'], loc='upper left')
+    plt.legend(['validation score', 'train score'], loc='upper left')
     # plt.savefig(f"results/{model_name} - Optimal alpha.png")
     plt.show()

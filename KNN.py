@@ -13,7 +13,6 @@ def train_model(X_train, y_train) -> GridSearchCV:
 
     # step-2: specify range of hyperparameters to tune
     hyper_params = {'n_neighbors': np.arange(1, 30), # it was 200 in my early versions
-                    'weights': ['uniform', 'distance'],
                     'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
                     'p': np.arange(1, 5)}
 
@@ -39,12 +38,11 @@ def create_plot(cv_results, model_cv, model_name:str):
     df = pd.DataFrame(cv_results)
     df = df[df['param_algorithm'] == model_cv.best_params_['algorithm']]
     df = df[df['param_p'] == model_cv.best_params_['p']]
-    df = df[df['param_weights'] == model_cv.best_params_['weights']]
     
     plt.plot(df["param_n_neighbors"], df["mean_test_r2"], linewidth=2)
     plt.plot(df["param_n_neighbors"], df["mean_train_r2"], linewidth=2)
     plt.xlabel('Number of neighbors')
     plt.ylabel('R-squared')
     plt.title("KNN optimal number of neighbors")
-    plt.legend(['test score', 'train score'], loc='upper left')
+    plt.legend(['validation score', 'train score'], loc='upper left')
     plt.show()
