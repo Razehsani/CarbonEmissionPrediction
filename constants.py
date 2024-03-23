@@ -14,7 +14,7 @@ train_test_datasets_file_name = "train_test_datasets.sav"
 train_test_datasets_aug_file_name = "train_test_datasets_aug.sav"
 scores_output_file_name = "scores.txt"
 scores_output_csv_file = "result.csv"
-scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'] #strategy to evaluate the performance of the cross-validation model
+scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error'] #strategy to evaluate the performance of the cross-validation model
 
 excluded_normalization_columns = [
     "Mixed tillage (Frequency)",
