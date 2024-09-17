@@ -252,7 +252,9 @@ def create_and_run_all_models(X_train: np.ndarray, y_train: np.ndarray, train_te
     rf_name = "RF_aug" if augmented else "RF"
     lr_mlp_name = "LR-MLP_aug" if augmented else "LR-MLP"
     
-    independent_variables = constants.independant_variables_potato if experiment["experiment_type"] == "potato" else constants.independant_variables_other_crops
+    independent_variables = constants.independant_variables_potato if experiment["experiment_type"] == "potato" else constants.independant_variables_other_crops if experiment["experiment_type"] == "other" else constants.independant_variables_general
+    if (experiment["experiment_type"] == "potato"):
+        independent_variables = range(independent_variables.start, independent_variables.stop + 1, independent_variables.step)
     all_independent_feature_names = train_test_datasets[0][0].columns[independent_variables]
     final_results.clear()
 

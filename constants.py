@@ -10,21 +10,25 @@ independant_variables_potato = range(1, 19)
 dependant_variable_potato = 19
 cft_dependant_variable_potato = 20
 
+independant_variables_general = range(1, 12)
+dependant_variable_general = 12
+cft_dependant_variable_general = 12
+
 train_test_datasets_file_name = "train_test_datasets.sav"
 train_test_datasets_aug_file_name = "train_test_datasets_aug.sav"
 scores_output_file_name = "scores.txt"
 scores_output_csv_file = "result.csv"
-scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error'] #strategy to evaluate the performance of the cross-validation model
+scoring = ['r2', 'neg_mean_absolute_error', 'neg_mean_squared_error', 'neg_root_mean_squared_error', 'neg_median_absolute_error', 'neg_mean_squared_log_error'] #strategy to evaluate the performance of the cross-validation model
 
 excluded_normalization_columns = [
-    "Mixed tillage (Frequency)",
-    "Other operations(Frequency)",
-    "Seeding(Frequency)",
-    "Fertilizing(Frequency)",
-    "spraying(Frequency)",
-    "cultivator(Frequency)",
-    "Watering(Frequency)",
-    "Harvesting(Frequency)",
+    "Tillage (frequency)",
+    "Operations (frequency)",
+    "Seeding (frequency)",
+    "Fertilizing (frequency)",
+    "Spraying (frequency)",
+    "Cultivator (frequency)",
+    "Irrigation (frequency)",
+    "Harvesting (frequency)",
     "Irrigation type"]
 
 experiments = [
@@ -120,13 +124,6 @@ experiments = [
                 "train_file_path": 'data/October datasets/IranPotato_Aug - Train.csv',
                 "test_file_path": 'data/October datasets/IranPotato_Aug - Test.csv',
                 "dataset_displayname": 'Iran potato aug',
-                "use_in_train": True,
-                "use_in_test": False
-            },
-            {
-                "train_file_path": 'data/October datasets/MoroccoPotato_Aug - Train.csv',
-                "test_file_path": 'data/October datasets/MoroccoPotato_Aug - Test.csv',
-                "dataset_displayname": 'Morocco potato aug',
                 "use_in_train": True,
                 "use_in_test": False
             }
@@ -618,6 +615,22 @@ experiments = [
                 "train_file_path": 'data/Cereals/Irrigated barley_aug - Final - Train.csv',
                 "test_file_path": 'data/Cereals/Irrigated barley_aug - Final - Test.csv',
                 "dataset_displayname": 'Irrigated barley',
+                "use_in_train": True,
+                "use_in_test": True
+            },
+        ],
+        "aug_datasets": []
+    },    
+    # 34. Generalized all crops and potato
+    {
+        "title": "34. Generalized all crops and potato",
+        "experiment_type": "general",
+        "generate_cft_result": False,
+        "datasets": [ 
+            {
+                "train_file_path": 'data/generalized-all-crops - Train.csv',
+                "test_file_path": 'data/generalized-all-crops - Test.csv',
+                "dataset_displayname": 'Corn',
                 "use_in_train": True,
                 "use_in_test": True
             },
